@@ -123,6 +123,7 @@ toforce<-data.frame(covariate=tf, rank="forced", rank.f="forced")
 ranks_2[c(nrow(ranks_2)-nrow(toforce)+1):c(nrow(ranks_2)),]<-toforce
 }
 }
+ranks_2<-ranks_2[,c("covariate", "rank.f")]
 # subset covariate set
 covdata<-covdata[sub('.*\\.', '', unlist(ranks_2["covariate"]))]
 
