@@ -24,7 +24,7 @@ if(!"covsel" %in% installed.packages()) devtools::install_github("N-SDM/covsel",
 
 ## Package functionality
 
-*covsel* includes a selection of three functions used to streamline
+*covsel* includes a set of three functions used to streamline
 covariate selection. These functions are:
 
 | Function name         | Function description                                                                                                         |
