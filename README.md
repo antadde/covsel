@@ -24,8 +24,8 @@ if(!"covsel" %in% installed.packages()) devtools::install_github("N-SDM/covsel",
 
 ## Package functionality
 
-*covsel* includes a set of three functions used to streamline
-covariate selection. These functions are:
+*covsel* includes a set of three functions used to streamline covariate
+selection. These functions are:
 
 | Function name         | Function description                                                                                                         |
 |-----------------------|------------------------------------------------------------------------------------------------------------------------------|
@@ -155,19 +155,19 @@ covdata_embed<-covsel.embed(covdata=covdata, pa=pa, algorithms=c('glm','gam','rf
 dim(covdata_embed$covdata) # top 12 retained for the final modelling set
 #> [1] 13609    12
 print(covdata_embed$ranks_2) # ranking table
-#>                                             covariate      rank rank.f
-#> 1                     ch_bioclim_chclim25_pixel_bio11  1.333333      1
-#> 9              ch_transport_tlm3d_pixel_dist2road_all  1.666667      2
-#> 6    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100  3.000000      3
-#> 4                      ch_bioclim_chclim25_pixel_bio4  5.666667      4
-#> 8                 ch_topo_alti3d2016_pixel_slope_mean  5.666667      5
-#> 7  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100  6.666667      6
-#> 5                     ch_edaphic_eivdescombes_pixel_w  8.000000      7
-#> 2                     ch_bioclim_chclim25_pixel_bio15  8.666667      8
-#> 3                      ch_bioclim_chclim25_pixel_bio3 11.666667      9
-#> 71   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100  6.000000     10
-#> 31                    ch_edaphic_eivdescombes_pixel_f  9.500000     11
-#> 27             ch_vege_copernicus_pixel_deciduous_100 11.500000     12
+#>                                             covariate rank.f
+#> 1                     ch_bioclim_chclim25_pixel_bio11      1
+#> 8              ch_transport_tlm3d_pixel_dist2road_all      2
+#> 5    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
+#> 4                      ch_bioclim_chclim25_pixel_bio4      4
+#> 7                 ch_topo_alti3d2016_pixel_slope_mean      5
+#> 6  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      6
+#> 2                     ch_bioclim_chclim25_pixel_bio15      7
+#> 3                      ch_bioclim_chclim25_pixel_bio3      8
+#> 9              ch_vege_copernicus_pixel_deciduous_100      9
+#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
+#> 51                    ch_edaphic_eivdescombes_pixel_w     11
+#> 31                    ch_edaphic_eivdescombes_pixel_f     12
 ```
 
 # Contributing
