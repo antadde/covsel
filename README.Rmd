@@ -117,7 +117,7 @@ To cite *covsel* or acknowledge its use, cite us as follows, substituting the ve
 Project Link: https://github.com/N-SDM/covsel
 
 # Acknowledgments
-*covsel* development has been conducted within the [info hidden for peer review] lab https://www.unil.ch/ecospat/en/home.html.
+*covsel* development has been conducted within the [info hidden for peer review] lab
 
 We gratefully acknowledge financial support through the Action Plan of the Swiss Biodiversity Strategy by the Federal Office for the Environment (FOEN) for financing the Valpar.ch and SwissCatchment projects.
 

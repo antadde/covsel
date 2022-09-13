@@ -163,11 +163,11 @@ print(covdata_embed$ranks_2) # ranking table
 #> 7                 ch_topo_alti3d2016_pixel_slope_mean      5
 #> 6  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      6
 #> 2                     ch_bioclim_chclim25_pixel_bio15      7
-#> 3                      ch_bioclim_chclim25_pixel_bio3      8
-#> 9              ch_vege_copernicus_pixel_deciduous_100      9
-#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
-#> 51                    ch_edaphic_eivdescombes_pixel_w     11
-#> 31                    ch_edaphic_eivdescombes_pixel_f     12
+#> 3                     ch_bioclim_chclim25_pixel_bio17      8
+#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100      9
+#> 51                    ch_edaphic_eivdescombes_pixel_w     10
+#> 31                    ch_edaphic_eivdescombes_pixel_f     11
+#> 27             ch_vege_copernicus_pixel_deciduous_100     12
 ```
 
 # Contributing
@@ -194,7 +194,7 @@ Project Link: <https://github.com/N-SDM/covsel>
 # Acknowledgments
 
 *covsel* development has been conducted within the \[info hidden for
-peer review\] lab <https://www.unil.ch/ecospat/en/home.html>.
+peer review\] lab
 
 We gratefully acknowledge financial support through the Action Plan of
 the Swiss Biodiversity Strategy by the Federal Office for the
