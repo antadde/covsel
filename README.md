@@ -4,14 +4,15 @@
 # covsel
 
 The goal of *covsel* is to streamline the main steps of our
-newly-devised covariate selection procedure aimed at optimizing the
-predictive abilities and parsimony of ensemble species distribution
-models fitted in a context of high dimensional candidate covariate
-space. Our covariate selection procedure is developed around three main
-algorithms: Generalized Linear Model (GLM), Generalized Additive Model
-(GAM), and Random Forest (RF). It is made of two main steps: (Step A)
-“Collinearity filtering”, and (Step B) “Model-specific embedding” . More
-details to come in the companion paper by Adde et al. (in prep).
+newly-devised “embedded” covariate selection procedure aimed at
+optimizing the predictive abilities and parsimony of ensemble species
+distribution models fitted in a context of high dimensional candidate
+covariate space. Our covariate selection procedure is developed around
+three main algorithms: Generalized Linear Model (GLM), Generalized
+Additive Model (GAM), and Random Forest (RF). It is made of two main
+steps: (Step A) “Collinearity filtering”, and (Step B) “Model-specific
+embedding” . More details to come in the companion paper by Adde et
+al. (in prep).
 
 ### Installation
 
@@ -157,17 +158,17 @@ dim(covdata_embed$covdata) # top 12 retained for the final modelling set
 print(covdata_embed$ranks_2) # ranking table
 #>                                             covariate rank.f
 #> 1                     ch_bioclim_chclim25_pixel_bio11      1
-#> 8              ch_transport_tlm3d_pixel_dist2road_all      2
+#> 9              ch_transport_tlm3d_pixel_dist2road_all      2
 #> 5    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
-#> 4                      ch_bioclim_chclim25_pixel_bio4      4
+#> 3                      ch_bioclim_chclim25_pixel_bio4      4
 #> 7                 ch_topo_alti3d2016_pixel_slope_mean      5
 #> 6  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      6
-#> 2                     ch_bioclim_chclim25_pixel_bio15      7
-#> 3                     ch_bioclim_chclim25_pixel_bio17      8
-#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100      9
-#> 51                    ch_edaphic_eivdescombes_pixel_w     10
-#> 31                    ch_edaphic_eivdescombes_pixel_f     11
-#> 27             ch_vege_copernicus_pixel_deciduous_100     12
+#> 4                     ch_edaphic_eivdescombes_pixel_w      7
+#> 2                     ch_bioclim_chclim25_pixel_bio17      8
+#> 8                    ch_transport_sonbase_pixel_noise      9
+#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
+#> 15 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     11
+#> 41                    ch_edaphic_eivdescombes_pixel_f     12
 ```
 
 # Contributing

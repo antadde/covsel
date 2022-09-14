@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # covsel
 
-The goal of *covsel* is to streamline the main steps of our newly-devised covariate selection procedure aimed at optimizing the predictive abilities and parsimony of ensemble species distribution models fitted in a context of high dimensional candidate covariate space. Our covariate selection procedure is developed around three main algorithms: Generalized Linear Model (GLM), Generalized Additive Model (GAM), and Random Forest (RF). It is made of two main steps: (Step A) “Collinearity filtering”, and (Step B) “Model-specific embedding” . More details to come in the companion paper by Adde et al. (in prep).
+The goal of *covsel* is to streamline the main steps of our newly-devised "embedded" covariate selection procedure aimed at optimizing the predictive abilities and parsimony of ensemble species distribution models fitted in a context of high dimensional candidate covariate space. Our covariate selection procedure is developed around three main algorithms: Generalized Linear Model (GLM), Generalized Additive Model (GAM), and Random Forest (RF). It is made of two main steps: (Step A) “Collinearity filtering”, and (Step B) “Model-specific embedding” . More details to come in the companion paper by Adde et al. (in prep).
 
 ### Installation
 

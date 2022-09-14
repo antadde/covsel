@@ -94,12 +94,12 @@ ranks_1<-rbind(ranks_1, rf.beta[,c("covariate","rank","model")])
 ###
 # Rank covariates selected commonly by the algorithms (intersect)
 intersect.tmp<-ranks_1[ranks_1$covariate %in% names(which(table(ranks_1$covariate) == length(unique(ranks_1$model)))),]
-intersect.tmp<-aggregate(intersect.tmp[,c("rank")], list(intersect.tmp$covariate), mean); colnames(intersect.tmp)<-c("covariate","rank")
+intersect.tmp<-aggregate(intersect.tmp[,c("rank")], list(intersect.tmp$covariate), sum); colnames(intersect.tmp)<-c("covariate","rank")
 intersect.sel<-data.frame(intersect.tmp[order(intersect.tmp$rank, decreasing = FALSE),], rank.f = 1:nrow(intersect.tmp))
 # Rank and add other covariates (union), if needed
 union.tmp<-ranks_1[ranks_1$covariate%in%names(which(table(ranks_1$covariate) < length(unique(ranks_1$model)))),]
 if(nrow(union.tmp)>0){
-union.tmp<-aggregate(union.tmp[,c("rank")], list(union.tmp$covariate), mean); colnames(union.tmp)<-c("covariate","rank")
+union.tmp<-aggregate(union.tmp[,c("rank")], list(union.tmp$covariate), sum); colnames(union.tmp)<-c("covariate","rank")
 union.sel.tmp<-data.frame(union.tmp[order(union.tmp$rank, decreasing = FALSE),], rank.f = (max(intersect.sel$rank.f+1)):(max(intersect.sel$rank.f)+nrow(union.tmp)))
 ranks_2<-rbind(intersect.sel,union.sel.tmp)
 } else {
