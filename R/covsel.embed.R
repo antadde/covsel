@@ -2,12 +2,12 @@
 #'
 #' Covariate selection with model-specific embedding (Step-2)
 #'
-#' @param pa vector of species presences (1) and absences (0)
 #' @param covdata data.frame containing covariate data
-#' @param weights vector containing the weights for each value in 'pa' (of length 'pa')
-#' @param algorithms character vector indicating the name(s) of the algorithms(s) to be used for the embedding procedure (options: 'glm', 'gam', 'rf')
+#' @param pa numeric vector of species presences (1) and absences (0)
+#' @param weights numeric vector containing the weights for each value in 'pa' (of length 'pa')
 #' @param force optional character vector indicating the name(s) of the covariate(s) to be forced in the final set
-#' @param ncov target number of covariates in the final set
+#' @param algorithms character vector indicating the name(s) of the algorithms(s) to be used for the embedding procedure (options: 'glm', 'gam', 'rf')
+#' @param ncov target number of covariates to include in the final set
 #' @param maxncov maximum possible number of covariates in the final set
 #' @param nthreads number of cores to be used during parallel operations
 #'
@@ -20,7 +20,7 @@
 #' dim(covdata_embed$covdata)
 #' @export
 
-covsel.embed <- function(covdata, pa, weights=NULL, algorithms=c('glm','gam','rf'), force=NULL, ncov=ceiling(log2(length(which(pa==1)))), maxncov=12, nthreads=detectCores()/2){
+covsel.embed <- function(covdata, pa, weights=NULL, force=NULL, algorithms=c('glm','gam','rf'), ncov=ceiling(log2(length(which(pa==1)))), maxncov=12, nthreads=detectCores()/2){
 
 # pre-settings
 ranks_1<-data.frame()
@@ -36,7 +36,7 @@ if('glm' %in% algorithms){
 # GLM (elastic-net)
 ###
 # embeddded covariate selection
-form<-as.formula(paste0("as.factor(pa) ~ " ,paste(paste0("poly(",names(covdata),",2)-1"),collapse=" + ")))
+form<-as.formula(paste0("as.factor(pa) ~ " ,paste(paste0("poly(",names(covdata),",2)"),collapse=" + "),"-1"))
 x <- model.matrix(form, covdata)
 mdl.glm <- cv.glmnet(x, as.factor(pa), alpha=0.5, weights=weights, family = "binomial", type.measure = "deviance", parallel = TRUE)
 # Extract results

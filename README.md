@@ -3,49 +3,50 @@
 
 # covsel
 
-The goal of *covsel* is to streamline the main steps of our
-newly-devised “embedded” covariate selection procedure aimed at
-optimizing the predictive abilities and parsimony of ensemble species
-distribution models fitted in a context of high dimensional candidate
-covariate space. Our covariate selection procedure is developed around
-three main algorithms: Generalized Linear Model (GLM), Generalized
-Additive Model (GAM), and Random Forest (RF). It is made of two main
-steps: (Step A) “Collinearity filtering”, and (Step B) “Model-specific
-embedding” . More details to come in the companion paper by Adde et
-al. (in prep).
+The goal of the *covsel* R package is to implement and streamline the
+two steps of our novel “embedded” covariate selection procedure. It
+combines (Step A) a collinearity-filtering algorithm and (Step B) three
+model-specific embedded regularization techniques, including generalized
+linear model with elastic net regularization, generalized additive model
+with null-space penalization, and guided regularized random forest. More
+details will come in the companion paper by Adde et al. (in prep).
 
 ### Installation
 
-You can install the development version of *covsel* from
-[GitHub](https://github.com/) with:
+The *covsel* package requires a standard installation of R
+(version≥4.0.0). You can install the development version of *covsel*
+from GitHub:
 
 ``` r
-if(!"covsel" %in% installed.packages()) devtools::install_github("N-SDM/covsel", auth_token = "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")
+if(!"covsel" %in% installed.packages())
+devtools::install_github("N-SDM/covsel",
+                         auth_token = "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")
 ```
 
-## Package functionality
+## Package functionalities
 
-*covsel* includes a set of three functions used to streamline covariate
-selection. These functions are:
+The current version of the *covsel* package (ver. 1.0) includes a set of
+three functions. See function help files for additional details on input
+data, arguments, and examples.
 
-| Function name         | Function description                                                                                                         |
-|-----------------------|------------------------------------------------------------------------------------------------------------------------------|
-| `covsel.filteralgo()` | Colinearity filtering                                                                                                        |
-| `covsel.embed()`      | Model-specific embedding                                                                                                     |
-| `covsel.filter()`     | Apply the colinearity filtering algorithm at each target level (e.g. variable level; ii=category level; iii= all remainders) |
+| Function name         | Function description                                                                                                                                     |
+|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `covsel.filteralgo()` | Collinearity filtering (Step A)                                                                                                                          |
+| `covsel.embed()`      | Model-specific embedding (Step B)                                                                                                                        |
+| `covsel.filter()`     | Wrapper function applying the collinearity filtering algorithm at each target level(s) (e.g. i: variable level; ii: category level; iii: all remainders) |
 
 # Example
 
 ### Introduction
 
-This example illustrates the functions of the *covsel* package by using
-occurrence data for the alpine marmot (*Marmota marmota) –* in
-Switzerland and a suite of 75 environmental covariates from 8 categories
-(bioclimatic, land use and cover, edaphic, hydrologic, human population,
-transportation, vegetation, and topographic) that are candidates for
-modelling its potential distribution. The aim is to reduce the
-dimensionality of the covariate set and select the top 12 covariates to
-be used in the final model.
+This example illustrates the functionalities of the *covsel* package.
+The goal is to model the habitat suitability of the alpine marmot
+(*Marmota marmota*) in Switzerland, starting with a suite of 75
+candidate covariates derived from 8 main categories (bioclimatic, land
+use and cover, edaphic, hydrologic, human population, transportation,
+vegetation, and topographic). Our aim is to reduce the dimensionality of
+the covariate set and select the top 12 covariates that will be used in
+the final model.
 
 ``` r
 library(covsel)
@@ -53,15 +54,15 @@ library(covsel)
 
 ### Load data
 
-The *data_covsel* dataset attached to this package contains a `list` of
-three objects including (i) `data_covsel$pa` a vector of presences (1)
-and absences (0), (ii) `data_covsel$env_vars` a data.frame containing
-the covariate data, and (iii) `data_covsel$catvar` a look-up data.frame
-containing `data_covsel$catvar$variable`, the variable-level
-names`and`data_covsel*c**a**t**v**a**r*category\` and category-level
-names of each covariate, both of length=ncol(covdata). Information on
-variable names and categories will be useful for applying the
-colinearity filtering algorithm in a stratified way (e.g.: variable
+The *data_covsel* dataset attached to the *covsel* package contains a
+`list` of three objects: (i) `data_covsel$pa` a numeric vector of
+presences ‘1’ and absences ‘0’, (ii) `data_covsel$env_vars` a data frame
+containing covariate data, and (iii) `data_covsel$catvar` a two columns
+look-up data frame `data_covsel$catvar$variable` and
+`data_covsel$catvar$category`, the variable-level names and
+category-level names of each covariate, respectively. Information on
+variable- and category-level covariate names will be useful for applying
+the collinearity filtering algorithm in a stratified way (e.g.: variable
 level first, then category level, then all remainders).
 
 ``` r
@@ -69,71 +70,89 @@ table(data_covsel$pa) # 3,609 presences and 10,000 background absences
 #> 
 #>     0     1 
 #> 10000  3609
-dim(data_covsel$env_vars) # 75 candidate environmental covariates extracted at each of the 3,609 + 10,000 points
+dim(data_covsel$env_vars) # 75 candidate environmental covariates extracted at pa locations
 #> [1] 13609    75
 ```
 
 ### Covariate selection
 
-The selection procedure is made of two steps: (Step A) “Collinearity
-filtering”, and (Step B) “Model-specific embedding”.
+The selection procedure is made of two main steps: (Step A)
+“Collinearity filtering”, and (Step B) “Model-specific embedding”.
 
-#### Step A: colinearity filtering
+#### Step A: Collinearity filtering
 
-In Step A, we reduce the dimensionality of the candidate set by
-eliminating the less informative covariates among collinear pairs, based
-on correlation matrices and univariate GLM p-values. The colinearity
-filtering algorithm can be either run on the whole set of candidate
-covariates, or in a stratified (e.g.: variable level, category level,
-all remainders).
+In Step A, we reduce the dimensionality of the candidate covariate set
+by eliminating the less informative covariates among collinear pairs.
+This is done by iteratively reducing a correlation matrix in which the
+covariates are ordered based on univariate GLM p-values. Collinear
+covariate pairs are identified using the Pearson correlation coefficient
+\|r\| threshold corcut, with corcut \> 0.70 as default value. For
+maximizing the diversity of selected covariates, the filtering step can
+be sequentially applied at three levels: (i) the variable (e.g.,
+selecting the best covariate for the “proportion of forest” variable
+calculated in 100-m, 500-m, or 1-km radii), (ii) the category (e.g.:
+within the “bioclimatic”, “edaphic”, or “hydrologic” categories), and
+(iii) using all remainders.
 
-##### whole set
+In this example, will run the collinearity filtering algorithm (i) first
+directly on the whole set of candidate covariates, (ii) then in a
+sequential way (variable level first, then category level, then all
+remainders).
 
-For running the colinearity filtering algorithm on the whole candidate
-covariate set, directly use the `covsel.filteralgo` function. Here we
-are using a threshold value `corcut` of \|r\| \< 0.70 (default) for
-identifying colinear pairs. It is possible to assign weights to each
-element in the `pa` vector and the argument `force` can be used to
-specify a character vector indicating the name(s) of the covariate(s) to
-be forced in the final set. See help(covsel.filteralgo) for details.
+##### directly on the whole set
+
+For running the collinearity filtering algorithm on the whole candidate
+covariate set, we directly use the `covsel.filteralgo` function. Here we
+are using the default `corcut` value \|r\| \< 0.70 for identifying
+collinear pairs. It is possible to assign weights to each element in the
+`pa` vector and the argument `force` can be used to specify a character
+vector indicating the name(s) of the covariate(s) to be forced in the
+final set. See help(`covsel.filteralgo`) for details.
 
 ``` r
 covdata<-data_covsel$env_vars
 pa<-data_covsel$pa
-dim(covdata) # 75 candidates before colinearity filtering
+dim(covdata) # 75 candidates before collinearity filtering
 #> [1] 13609    75
-covdata_filter<-covsel.filteralgo(covdata=covdata, pa=pa, corcut=0.7)
+covdata_filter<-covsel.filteralgo(covdata=covdata,
+                                  pa=pa,
+                                  corcut=0.7)
 dim(covdata_filter) # much less after
 #> [1] 13609    45
 ```
 
-##### stratified
+##### in a sequential way
 
-For running the colinearity filtering algorithm in a stratified way
+For running the collinearity filtering algorithm in a sequential way
 (e.g.: variable level first, then category level, then all remainders),
-use the wrapper function `covsel.filter` function. In addition to the
-argument described above, this function needs at least (or both)
-information on the variable-level or/and category-level names. These can
-be provided as character vectors of length=ncol(covdata) to the
-arguments `variables` and `weights`.
+we will use the wrapper function `covsel.filter`. In addition to the
+arguments described for `covsel.filteralgo`, this function requires
+information on the variable-level or/and category-level covariate names.
+These can be provided as character vectors to the arguments `variables`
+and `categories`, respectively.
 
 ``` r
 covdata<-data_covsel$env_vars
 pa<-data_covsel$pa
-dim(covdata) # 75 candidates before colinearity filtering
+dim(covdata) # 75 candidates before collinearity filtering
 #> [1] 13609    75
-covdata_filter<-covsel.filter(covdata=covdata, pa=pa, corcut=0.7, variables=data_covsel$catvar$variable, categories=data_covsel$catvar$category)
+covdata_filter<-covsel.filter(covdata=covdata,
+                              pa=pa,
+                              corcut=0.7,
+                              variables=data_covsel$catvar$variable,
+                              categories=data_covsel$catvar$category)
 dim(covdata_filter) # much less after
 #> [1] 13609    37
 ```
 
-#### Step B: model-specific embedding
+#### Step B: Model-specific embedding
 
-Selected covariates from step A are used to fit models with embedded
-selection procedures by using the `covsel.embed` function. Available
-algorithms are: GLM with elastic-net regularization, GAM with null-space
+Covariates selected after step A are used to fit models with embedded
+selection procedures using the `covsel.embed` function. Available
+algorithms in the current version of the *covsel* package (ver. 1.0)
+are: GLM with elastic-net regularization, GAM with null-space
 penalization, and guided regularized RF. They can be used together
-(default) or individually by tuning the `algorithms` argument. For each
+(default), or individually by tuning the `algorithms` argument. For each
 algorithm, the n covariates retained after regularization are ranked
 from 1 (“best”) to n (“worst”). The algorithm-specific ranking is done
 based on the absolute value of the regularized regression coefficients
@@ -144,31 +163,42 @@ the covariates that were commonly selected by all the algorithms, and
 then adding the remaining. The top ncov covariates are selected as the
 final modelling set, with `ncov` and `maxncov` being user-specifiable
 arguments with default values round(log2(number of occurrences)) and 12,
-respectively. See help(covsel.embed) for details on all other arguments
-(`weights`, `force`, `nthreads`, etc.).
+respectively. See help(`covsel.embed`) for details on other optional
+arguments (i.e. `weights`, `force`, `nthreads`, etc.).
 
 ``` r
 covdata<-data_covfilter
 pa<-data_covsel$pa
 dim(covdata) # 37 candidates before embedding
 #> [1] 13609    37
-covdata_embed<-covsel.embed(covdata=covdata, pa=pa, algorithms=c('glm','gam','rf'), ncov=ceiling(log2(length(which(pa==1)))), maxncov=12) # takes some time
+covdata_embed<-covsel.embed(covdata=covdata,
+                            pa=pa,
+                            algorithms=c('glm','gam','rf'),
+                            ncov=ceiling(log2(length(which(pa==1)))),
+                            maxncov=12) # takes some time..
 dim(covdata_embed$covdata) # top 12 retained for the final modelling set
 #> [1] 13609    12
+```
+
+Here we are! Below is the list of the top 12 covariates retained for
+modelling the habitat suitability of the alpine marmot (*Marmota
+marmota*) in Switzerland.
+
+``` r
 print(covdata_embed$ranks_2) # ranking table
 #>                                             covariate rank.f
 #> 1                     ch_bioclim_chclim25_pixel_bio11      1
 #> 9              ch_transport_tlm3d_pixel_dist2road_all      2
-#> 5    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
-#> 3                      ch_bioclim_chclim25_pixel_bio4      4
-#> 7                 ch_topo_alti3d2016_pixel_slope_mean      5
-#> 6  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      6
-#> 4                     ch_edaphic_eivdescombes_pixel_w      7
+#> 6    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
+#> 4                      ch_bioclim_chclim25_pixel_bio4      4
+#> 7  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      5
+#> 8                 ch_topo_alti3d2016_pixel_slope_mean      6
+#> 5                     ch_edaphic_eivdescombes_pixel_w      7
 #> 2                     ch_bioclim_chclim25_pixel_bio17      8
-#> 8                    ch_transport_sonbase_pixel_noise      9
-#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
-#> 15 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     11
-#> 41                    ch_edaphic_eivdescombes_pixel_f     12
+#> 3                      ch_bioclim_chclim25_pixel_bio3      9
+#> 71   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
+#> 14 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     11
+#> 27                    ch_bioclim_chclim25_pixel_bio15     12
 ```
 
 # Contributing
@@ -179,12 +209,12 @@ issue with the tag “enhancement”. Thanks!
 
 # Citation
 
-To cite *covsel* or acknowledge its use, cite us as follows,
+To cite *covsel* or acknowledge its use, cite the package as follows,
 substituting the version of *covsel* that you used for “version 1.0”:
 
 \[info hidden for peer review\] et al. 2022. Too many candidates:
-embedded covariate selection procedure for ensemble species distribution
-modelling. – XXX XXX: XXX (ver. 1.0).
+embedded covariate selection procedure for species distribution
+modelling with the covsel R package. – XXX XXX: XXX (ver. 1.0).
 
 # Contact
 

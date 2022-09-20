@@ -1,12 +1,12 @@
 #' covsel.filteralgo
 #'
-#' Colinearity filtering algorithm
+#' Collinearity filtering algorithm
 #'
-#' @param pa vector of species presences (1) and absences (0)
 #' @param covdata data.frame containing covariate data
-#' @param weights vector containing the weights for each value in 'pa' (of length 'pa')
+#' @param pa numeric vector of species presences (1) and absences (0)
+#' @param weights numeric vector containing the weights for each value in 'pa' (of length 'pa')
 #' @param force optional character vector indicating the name(s) of the covariate(s) to be forced in the final set
-#' @param corcut numeric value of the correlation coefficient threshold used for colinearity identification
+#' @param corcut numeric value for the correlation coefficient threshold used for identifying collinearity
 #'
 #' @return A data.frame of "non-colinear" candidate covariates
 #' @author Antoine Adde (antoine.adde@unil.ch)
