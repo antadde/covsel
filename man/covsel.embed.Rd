@@ -8,25 +8,25 @@ covsel.embed(
   covdata,
   pa,
   weights = NULL,
-  algorithms = c("glm", "gam", "rf"),
   force = NULL,
+  algorithms = c("glm", "gam", "rf"),
   ncov = ceiling(log2(length(which(pa == 1)))),
   maxncov = 12,
   nthreads = detectCores()/2
 )
 }
 \arguments{
-\item{covdata}{data.frame containing covariate data}
+\item{covdata}{data.frame containing covariate data extracted at 'pa' locations}
 
-\item{pa}{vector of species presences (1) and absences (0)}
+\item{pa}{numeric vector of species presences (1) and absences (0)}
 
-\item{weights}{vector containing the weights for each value in 'pa' (of length 'pa')}
-
-\item{algorithms}{character vector indicating the name(s) of the algorithms(s) to be used for the embedding procedure (options: 'glm', 'gam', 'rf')}
+\item{weights}{numeric vector containing the weights for each value in 'pa' (of length 'pa')}
 
 \item{force}{optional character vector indicating the name(s) of the covariate(s) to be forced in the final set}
 
-\item{ncov}{target number of covariates in the final set}
+\item{algorithms}{character vector indicating the name(s) of the algorithms(s) to be used for the embedding procedure (options: 'glm', 'gam', 'rf')}
+
+\item{ncov}{target number of covariates to include in the final set}
 
 \item{maxncov}{maximum possible number of covariates in the final set}
 

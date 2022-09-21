@@ -3,13 +3,15 @@
 
 # covsel
 
-The goal of the *covsel* R package is to implement and streamline the
-two steps of our novel “embedded” covariate selection procedure. It
+The *covsel* R package is a ready-to-use, automated, covariate selection
+tool for species distribution modelling. It implements and streamlines
+the two steps of our novel “embedded” covariate selection procedure that
 combines (Step A) a collinearity-filtering algorithm and (Step B) three
 model-specific embedded regularization techniques, including generalized
 linear model with elastic net regularization, generalized additive model
 with null-space penalization, and guided regularized random forest. More
-details will come in the companion paper by Adde et al. (in prep).
+details will come in the companion paper by \[hidden for peer-review\]
+(in prep).
 
 ### Installation
 
@@ -19,8 +21,7 @@ from GitHub:
 
 ``` r
 if(!"covsel" %in% installed.packages())
-devtools::install_github("N-SDM/covsel",
-                         auth_token = "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")
+devtools::install_github("N-SDM/covsel")
 ```
 
 ## Package functionalities
@@ -57,13 +58,14 @@ library(covsel)
 The *data_covsel* dataset attached to the *covsel* package contains a
 `list` of three objects: (i) `data_covsel$pa` a numeric vector of
 presences ‘1’ and absences ‘0’, (ii) `data_covsel$env_vars` a data frame
-containing covariate data, and (iii) `data_covsel$catvar` a two columns
-look-up data frame `data_covsel$catvar$variable` and
-`data_covsel$catvar$category`, the variable-level names and
-category-level names of each covariate, respectively. Information on
-variable- and category-level covariate names will be useful for applying
-the collinearity filtering algorithm in a stratified way (e.g.: variable
-level first, then category level, then all remainders).
+containing covariate data extracted at `pa` locations, and (iii)
+`data_covsel$catvar` a two columns look-up data frame
+`data_covsel$catvar$variable` and `data_covsel$catvar$category`, the
+variable-level names and category-level names of each covariate,
+respectively. Information on variable- and category-level covariate
+names will be useful for applying the collinearity filtering algorithm
+in a stratified way (e.g.: variable level first, then category level,
+then all remainders).
 
 ``` r
 table(data_covsel$pa) # 3,609 presences and 10,000 background absences
@@ -116,7 +118,7 @@ dim(covdata) # 75 candidates before collinearity filtering
 #> [1] 13609    75
 covdata_filter<-covsel.filteralgo(covdata=covdata,
                                   pa=pa,
-                                  corcut=0.7)
+                                  corcut=0.7) # default value
 dim(covdata_filter) # much less after
 #> [1] 13609    45
 ```
@@ -138,7 +140,7 @@ dim(covdata) # 75 candidates before collinearity filtering
 #> [1] 13609    75
 covdata_filter<-covsel.filter(covdata=covdata,
                               pa=pa,
-                              corcut=0.7,
+                              corcut=0.7, # default value
                               variables=data_covsel$catvar$variable,
                               categories=data_covsel$catvar$category)
 dim(covdata_filter) # much less after
@@ -173,11 +175,10 @@ dim(covdata) # 37 candidates before embedding
 #> [1] 13609    37
 covdata_embed<-covsel.embed(covdata=covdata,
                             pa=pa,
-                            algorithms=c('glm','gam','rf'),
-                            ncov=ceiling(log2(length(which(pa==1)))),
-                            maxncov=12) # takes some time..
-dim(covdata_embed$covdata) # top 12 retained for the final modelling set
-#> [1] 13609    12
+                            algorithms=c('glm','gam','rf'), # default value
+                            ncov=ceiling(log2(length(which(pa==1)))), # default value
+                            maxncov=12, # default value
+                            nthreads=detectCores()/2)  # default value
 ```
 
 Here we are! Below is the list of the top 12 covariates retained for
@@ -185,20 +186,22 @@ modelling the habitat suitability of the alpine marmot (*Marmota
 marmota*) in Switzerland.
 
 ``` r
+dim(covdata_embed$covdata) # data.frame with the top 12 retained for the final modelling set
+#> [1] 13609    12
 print(covdata_embed$ranks_2) # ranking table
 #>                                             covariate rank.f
 #> 1                     ch_bioclim_chclim25_pixel_bio11      1
-#> 9              ch_transport_tlm3d_pixel_dist2road_all      2
-#> 6    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
-#> 4                      ch_bioclim_chclim25_pixel_bio4      4
-#> 7  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      5
-#> 8                 ch_topo_alti3d2016_pixel_slope_mean      6
-#> 5                     ch_edaphic_eivdescombes_pixel_w      7
-#> 2                     ch_bioclim_chclim25_pixel_bio17      8
-#> 3                      ch_bioclim_chclim25_pixel_bio3      9
-#> 71   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
-#> 14 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     11
-#> 27                    ch_bioclim_chclim25_pixel_bio15     12
+#> 8              ch_transport_tlm3d_pixel_dist2road_all      2
+#> 5    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
+#> 3                      ch_bioclim_chclim25_pixel_bio4      4
+#> 7                 ch_topo_alti3d2016_pixel_slope_mean      5
+#> 6  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      6
+#> 4                     ch_edaphic_eivdescombes_pixel_w      7
+#> 2                     ch_bioclim_chclim25_pixel_bio15      8
+#> 9              ch_vege_copernicus_pixel_deciduous_100      9
+#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
+#> 15 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     11
+#> 41                    ch_edaphic_eivdescombes_pixel_f     12
 ```
 
 # Contributing

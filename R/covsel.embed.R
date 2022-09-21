@@ -2,7 +2,7 @@
 #'
 #' Covariate selection with model-specific embedding (Step-2)
 #'
-#' @param covdata data.frame containing covariate data
+#' @param covdata data.frame containing covariate data extracted at 'pa' locations
 #' @param pa numeric vector of species presences (1) and absences (0)
 #' @param weights numeric vector containing the weights for each value in 'pa' (of length 'pa')
 #' @param force optional character vector indicating the name(s) of the covariate(s) to be forced in the final set
@@ -38,7 +38,7 @@ if('glm' %in% algorithms){
 # embeddded covariate selection
 form<-as.formula(paste0("as.factor(pa) ~ " ,paste(paste0("poly(",names(covdata),",2)"),collapse=" + "),"-1"))
 x <- model.matrix(form, covdata)
-mdl.glm <- cv.glmnet(x, as.factor(pa), alpha=0.5, weights=weights, family = "binomial", type.measure = "deviance", parallel = TRUE)
+mdl.glm <- suppressWarnings(cv.glmnet(x, as.factor(pa), alpha=0.5, weights=weights, family = "binomial", type.measure = "deviance", parallel = TRUE))
 # Extract results
 glm.beta<-as.data.frame(as.matrix(coef(mdl.glm, s=mdl.glm$lambda.1se)))
 if(plyr::empty(glm.beta)) glm.beta<-as.data.frame(as.matrix(coef(mdl.glm, s=mdl.glm$lambda.min)))

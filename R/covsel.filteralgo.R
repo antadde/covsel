@@ -2,7 +2,7 @@
 #'
 #' Collinearity filtering algorithm
 #'
-#' @param covdata data.frame containing covariate data
+#' @param covdata data.frame containing covariate data extracted at 'pa' locations
 #' @param pa numeric vector of species presences (1) and absences (0)
 #' @param weights numeric vector containing the weights for each value in 'pa' (of length 'pa')
 #' @param force optional character vector indicating the name(s) of the covariate(s) to be forced in the final set
@@ -39,7 +39,7 @@ covdata<-cbind(covdata, pa=as.factor(pa))
 
 # Rank candidate covariates using selected method
 res <- sort(apply(subset(covdata, select=-c(pa)), 2, function(x){
-min(summary(glm(covdata$pa ~ poly(x, degree=2), family="binomial", weights=weights))$coefficients[2:3,4])
+min(summary(suppressWarnings(glm(covdata$pa ~ poly(x, degree=2), family="binomial", weights=weights)))$coefficients[2:3,4])
 }))
 covranked<-data.frame(pval=res, row.names=names(res))
 

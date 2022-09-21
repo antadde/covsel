@@ -7,33 +7,33 @@
 covsel.filter(
   covdata,
   pa,
-  variables = NULL,
-  categories = NULL,
   weights = NULL,
   force = NULL,
-  corcut = 0.7
+  corcut = 0.7,
+  variables = NULL,
+  categories = NULL
 )
 }
 \arguments{
-\item{covdata}{data.frame containing covariate data}
+\item{covdata}{data.frame containing covariate data extracted at 'pa' locations}
 
-\item{pa}{vector of species presences (1) and absences (0)}
+\item{pa}{numeric vector of species presences (1) and absences (0)}
 
-\item{variables}{character vector of length ncol(covdata) containing variable-level names}
-
-\item{categories}{character vector of length ncol(covdata) containing category-level names}
-
-\item{weights}{vector containing the weights for each value in 'pa' (of length 'pa')}
+\item{weights}{numeric vector containing the weights for each value in 'pa' (of length 'pa')}
 
 \item{force}{optional character vector indicating the name(s) of the covariate(s) to be forced in the final set}
 
-\item{corcut}{The value (numeric) of the correlation coefficient threshold for identifying colinearity}
+\item{corcut}{numeric value for the correlation coefficient threshold used for identifying collinearity}
+
+\item{variables}{character vector of length ncol(covdata) containing variable-level info}
+
+\item{categories}{character vector of length ncol(covdata) containing category-level info}
 }
 \value{
 A data.frame of "non-colinear" candidate covariates
 }
 \description{
-Apply the colinearity filtering algorithm at each target level (i=variable level; ii=category level; iii= all remainders)
+Apply the collinearity filtering algorithm at each target level (i=variable level; ii=category level; iii= all remainders)
 }
 \examples{
 covdata<-data_covsel$env_vars
