@@ -20,8 +20,7 @@ The *covsel* package requires a standard installation of R
 from GitHub:
 
 ``` r
-if(!"covsel" %in% installed.packages())
-devtools::install_github("N-SDM/covsel")
+if(!"covsel" %in% installed.packages()) devtools::install_github("N-SDM/covsel")
 ```
 
 ## Package functionalities
@@ -198,10 +197,10 @@ print(covdata_embed$ranks_2) # ranking table
 #> 6  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      6
 #> 4                     ch_edaphic_eivdescombes_pixel_w      7
 #> 2                     ch_bioclim_chclim25_pixel_bio15      8
-#> 9              ch_vege_copernicus_pixel_deciduous_100      9
-#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
-#> 15 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     11
-#> 41                    ch_edaphic_eivdescombes_pixel_f     12
+#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100      9
+#> 15 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     10
+#> 41                    ch_edaphic_eivdescombes_pixel_f     11
+#> 17 ch_lulc_geostat65_present_pixel_2013_2018_cl42_100     12
 ```
 
 # Contributing

@@ -23,8 +23,7 @@ The *covsel* R package is a ready-to-use, automated, covariate selection tool fo
 The *covsel* package requires a standard installation of R (version≥4.0.0). You can install the development version of *covsel* from GitHub:
 
 ```{r Install covsel, warning = FALSE, message = FALSE}
-if(!"covsel" %in% installed.packages())
-devtools::install_github("N-SDM/covsel")
+if(!"covsel" %in% installed.packages()) devtools::install_github("N-SDM/covsel")
 ```
 
 ## Package functionalities
