@@ -18,7 +18,7 @@ covsel.filteralgo(covdata, pa, weights = NULL, force = NULL, corcut = 0.7)
 \item{corcut}{numeric value for the correlation coefficient threshold used for identifying collinearity}
 }
 \value{
-A data.frame of "non-colinear" candidate covariates
+A data.frame of "non-collinear" candidate covariates
 }
 \description{
 Collinearity filtering algorithm

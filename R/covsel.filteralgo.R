@@ -8,7 +8,7 @@
 #' @param force optional character vector indicating the name(s) of the covariate(s) to be forced in the final set
 #' @param corcut numeric value for the correlation coefficient threshold used for identifying collinearity
 #'
-#' @return A data.frame of "non-colinear" candidate covariates
+#' @return A data.frame of "non-collinear" candidate covariates
 #' @author Antoine Adde (antoine.adde@unil.ch)
 #' @examples
 #' covdata<-data_covsel$env_vars
@@ -23,14 +23,23 @@ covsel.filteralgo <- function(covdata, pa, weights=NULL, force=NULL, corcut=0.7)
   if(ncol(covdata)==1){
   covdata.filter<-covdata
   return(covdata.filter)}
+  
+# Remove covariates with less than 10 unique points (required later for embedding)
+pointless<-which(apply(covdata, 2, function(x) length(unique(x)))<10)
+if(length(pointless)>0){
+print(paste0("Covariate '", names(covdata)[pointless], "' has less than 10 unique points and will be discarded"))
+covdata<-covdata[,-pointless]
+}
 
-# If covariates to force, eliminate colinear ones
+# If covariate(s) to force, eliminate collinear ones
 force_dat<-data.frame()
 if(is.character(force)){
 if("TRUE" %in% (force %in% names(covdata))){
-force_dat<-covdata[, force]
-ix<-which(rowSums(abs(cor(covdata)[,force]))/length(force)<corcut)
-covdata<-covdata[,ix]
+force_dat<-data.frame(covdata[, force])
+names(force_dat)<-force
+if(length(force)>1)  ix<-unique(rownames(which(abs(cor(covdata)[,force])>corcut, arr.ind=TRUE)))
+if(length(force)==1) ix<-names(which(abs(cor(covdata)[,force])>corcut))
+covdata<-covdata[, !(colnames(covdata) %in% ix)]
 }
 }
 
@@ -47,9 +56,8 @@ covranked<-data.frame(pval=res, row.names=names(res))
 covdata.ranked <- data.frame(covdata[, row.names(covranked)])
 cor.mat<-abs(cor(covdata.ranked,use="pairwise.complete.obs"))
 
-# Thin candidate covariate set until no pairwise correlation > corcut
+# Thin candidate covariate set until no correlation > corcut
     sanctuaire<-NULL
-
     if (all(cor.mat[cor.mat!=1] < corcut)) {
     sanctuaire <-c(sanctuaire,row.names(cor.mat))
     } else {
@@ -70,7 +78,8 @@ cor.mat<-abs(cor(covdata.ranked,use="pairwise.complete.obs"))
 covdata.filter<-as.data.frame(covdata[,sanctuaire])
 
 # If covariates to force, add it
-if(ncol(force_dat)>1) covdata.filter<-cbind(covdata.filter, force_dat)
+if(ncol(force_dat)>0) covdata.filter<-cbind(covdata.filter, force_dat)
+
 if(length(sanctuaire)==1) colnames(covdata.filter)<-sanctuaire
 
 return(covdata.filter)

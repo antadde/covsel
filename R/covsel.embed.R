@@ -41,13 +41,17 @@ x <- model.matrix(form, covdata)
 mdl.glm <- suppressWarnings(cv.glmnet(x, as.factor(pa), alpha=0.5, weights=weights, family = "binomial", type.measure = "deviance", parallel = TRUE))
 # Extract results
 glm.beta<-as.data.frame(as.matrix(coef(mdl.glm, s=mdl.glm$lambda.1se)))
-if(plyr::empty(glm.beta)) glm.beta<-as.data.frame(as.matrix(coef(mdl.glm, s=mdl.glm$lambda.min)))
-glm.beta<-data.frame(covariate = row.names(glm.beta)[which(glm.beta != 0)], coef=as.numeric(abs(glm.beta[,1]))[which(glm.beta != 0)])[-1,]
+glm.beta<-data.frame(covariate = row.names(glm.beta), coef=as.numeric(abs(glm.beta[,1])))[which(glm.beta != 0),][-1,]
+if(nrow(glm.beta)<1){glm.beta<-as.data.frame(as.matrix(coef(mdl.glm, s=mdl.glm$lambda.min)))
+glm.beta<-data.frame(covariate = row.names(glm.beta), coef=as.numeric(abs(glm.beta[,1])))[which(glm.beta != 0),][-1,]}
+if(nrow(glm.beta)<1){print("No covariate selected after elastic-net regularization, skipping to next algorithm")
+} else {
 glm.beta<-data.frame(glm.beta[order(glm.beta$coef, decreasing = TRUE),], model="glm")
 glm.beta$covariate<-stri_sub(glm.beta$covariate,6,-6)
 glm.beta<-data.frame(setDT(glm.beta)[, .SD[which.max(coef)], by=covariate])
 glm.beta$rank<-1:nrow(glm.beta)
 ranks_1<-rbind(ranks_1, glm.beta[,c("covariate","rank","model")])
+}
 }
 
 if('gam' %in% algorithms){
@@ -65,8 +69,11 @@ mdl.gam <- mgcv::bam(form, data=cbind(covdata, as.factor(pa)), weights=weights, 
 # Extract results
 gam.beta<-data.frame(covariate=names(mdl.gam$model)[! names(mdl.gam$model) %in% c('(weights)', 'pa')], summary(mdl.gam)$s.table, row.names = NULL)
 gam.beta<-gam.beta[gam.beta$p.value<0.9,]
+if(nrow(gam.beta)<1){print("No covariate selected after GAM (null-space penalization), skipping to next algorithm")
+} else {
 gam.beta<-data.frame(gam.beta[order(abs(gam.beta$Chi.sq), decreasing = TRUE),], rank = 1:nrow(gam.beta), model="gam")
 ranks_1<-rbind(ranks_1, gam.beta[,c("covariate","rank","model")])
+}
 }
 
 if('rf' %in% algorithms){
@@ -83,8 +90,11 @@ mdl.rf <- RRF(covdata, as.factor(pa), classwt=c("0"=min(weights), "1"=max(weight
 # Extract results
 rf.beta<-data.frame(covariate = row.names(mdl.rf$importance), mdl.rf$importance,  row.names=NULL)
 rf.beta<-rf.beta[which(rf.beta$MeanDecreaseGini > 0),]
+if(nrow(gam.beta)<1){print("No covariate selected after RF (guided regularized random forest)")
+} else {
 rf.beta<-data.frame(rf.beta[order(rf.beta$MeanDecreaseGini, decreasing = TRUE),], rank = 1:nrow(rf.beta), model="rf")
 ranks_1<-rbind(ranks_1, rf.beta[,c("covariate","rank","model")])
+}
 }
 
 ###
@@ -92,6 +102,9 @@ ranks_1<-rbind(ranks_1, rf.beta[,c("covariate","rank","model")])
 # Ranking
 ###
 ###
+if(nrow(ranks_1)<1){print("No covariate selected after the embedding procedure ...")
+return(NULL)
+} else {
 # Rank covariates selected commonly by the algorithms (intersect)
 intersect.tmp<-ranks_1[ranks_1$covariate %in% names(which(table(ranks_1$covariate) == length(unique(ranks_1$model)))),]
 intersect.tmp<-aggregate(intersect.tmp[,c("rank")], list(intersect.tmp$covariate), sum); colnames(intersect.tmp)<-c("covariate","rank")
@@ -129,4 +142,5 @@ covdata<-covdata[sub('.*\\.', '', unlist(ranks_2["covariate"]))]
 
 # Return results
 return(list(covdata=covdata, ranks_1=ranks_1, ranks_2=ranks_2))
+}
 }

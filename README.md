@@ -190,17 +190,17 @@ dim(covdata_embed$covdata) # data.frame with the top 12 retained for the final m
 print(covdata_embed$ranks_2) # ranking table
 #>                                             covariate rank.f
 #> 1                     ch_bioclim_chclim25_pixel_bio11      1
-#> 8              ch_transport_tlm3d_pixel_dist2road_all      2
-#> 5    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
-#> 3                      ch_bioclim_chclim25_pixel_bio4      4
-#> 7                 ch_topo_alti3d2016_pixel_slope_mean      5
-#> 6  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      6
-#> 4                     ch_edaphic_eivdescombes_pixel_w      7
+#> 10             ch_transport_tlm3d_pixel_dist2road_all      2
+#> 7    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
+#> 5                      ch_bioclim_chclim25_pixel_bio4      4
+#> 9                 ch_topo_alti3d2016_pixel_slope_mean      5
+#> 8  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      6
+#> 6                     ch_edaphic_eivdescombes_pixel_w      7
 #> 2                     ch_bioclim_chclim25_pixel_bio15      8
-#> 81   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100      9
-#> 15 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     10
-#> 41                    ch_edaphic_eivdescombes_pixel_f     11
-#> 17 ch_lulc_geostat65_present_pixel_2013_2018_cl42_100     12
+#> 3                     ch_bioclim_chclim25_pixel_bio17      9
+#> 4                      ch_bioclim_chclim25_pixel_bio3     10
+#> 61   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     11
+#> 13 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     12
 ```
 
 # Contributing
