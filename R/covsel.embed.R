@@ -35,7 +35,7 @@ if('glm' %in% algorithms){
 ###
 # GLM (elastic-net)
 ###
-# embeddded covariate selection
+# embedded covariate selection
 form<-as.formula(paste0("as.factor(pa) ~ " ,paste(paste0("poly(",names(covdata),",2)"),collapse=" + "),"-1"))
 x <- model.matrix(form, covdata)
 mdl.glm <- suppressWarnings(cv.glmnet(x, as.factor(pa), alpha=0.5, weights=weights, family = "binomial", type.measure = "deviance", parallel = TRUE))
@@ -80,7 +80,7 @@ if('rf' %in% algorithms){
 ###
 # RF (guided regularized random forest)
 ###
-# embeddded covariate selection
+# embedded covariate selection
 rf <- RRF(covdata,as.factor(pa), flagReg = 0)
 impRF <- rf$importance[,"MeanDecreaseGini"]
 imp <- impRF/(max(impRF))
