@@ -59,11 +59,17 @@ if('gam' %in% algorithms){
 # GAM (null-space penalization)
 ###
 # embedded covariate selection
-form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata),",bs='cr')"),collapse=" + ")))
+pointless10<-integer()
+if(length(force)>0){
+df_force<-data.frame(covdata[,force]); names(df_force)<-force
+pointless10<-which(apply(df_force, 2, function(x) length(unique(x)))<10)
+}
+
+form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata)[names(covdata) != names(pointless10)],",bs='cr')"),collapse=" + ")))
 mdl.gam <- mgcv::bam(form, data=cbind(covdata, as.factor(pa)), weights=weights, family="binomial", method="fREML", select=TRUE, discrete=TRUE, control=list(nthreads=nthreads))
 t<-try(summary(mdl.gam), TRUE)
 if(class(t)=="try-error"){
-form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata),",bs='ts')"),collapse=" + ")))
+form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata)[names(covdata) != names(pointless10)],",bs='ts')"),collapse=" + ")))
 mdl.gam <- mgcv::bam(form, data=cbind(covdata, as.factor(pa)), weights=weights, family="binomial", method="fREML", select=TRUE, discrete=TRUE, control=list(nthreads=nthreads))
 }
 # Extract results
