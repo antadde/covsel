@@ -59,7 +59,7 @@ if('gam' %in% algorithms){
 # GAM (null-space penalization)
 ###
 # put aside forced covariates with < 10 unique points (required for default mgcv settings)
-pointless10<-integer()
+pointless10<-integer(999); names(pointless10)<-"pointless10"
 if(length(force)>0){
 df_force<-data.frame(covdata[,force]); names(df_force)<-force
 pointless10<-which(apply(df_force, 2, function(x) length(unique(x)))<10)
