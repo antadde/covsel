@@ -58,13 +58,13 @@ if('gam' %in% algorithms){
 ###
 # GAM (null-space penalization)
 ###
-# embedded covariate selection
+# put aside forced covariates with < 10 unique points (required for default mgcv settings)
 pointless10<-integer()
 if(length(force)>0){
 df_force<-data.frame(covdata[,force]); names(df_force)<-force
 pointless10<-which(apply(df_force, 2, function(x) length(unique(x)))<10)
 }
-
+# embedded covariate selection
 form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata)[names(covdata) != names(pointless10)],",bs='cr')"),collapse=" + ")))
 mdl.gam <- mgcv::bam(form, data=cbind(covdata, as.factor(pa)), weights=weights, family="binomial", method="fREML", select=TRUE, discrete=TRUE, control=list(nthreads=nthreads))
 t<-try(summary(mdl.gam), TRUE)

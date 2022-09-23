@@ -24,7 +24,7 @@ covsel.filteralgo <- function(covdata, pa, weights=NULL, force=NULL, corcut=0.7)
   covdata.filter<-covdata
   return(covdata.filter)}
   
-# Remove covariates with less than 10 unique points (required later for embedding), but keep forced ones
+# Remove covariates with less than 10 unique points (required for embedding part), but keep forced ones
 pointless10<-which(apply(covdata, 2, function(x) length(unique(x)))<10)
 if(length(pointless10)>0){
 pointless<-pointless10[!names(pointless10)%in% force]
