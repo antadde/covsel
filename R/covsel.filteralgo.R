@@ -25,10 +25,17 @@ covsel.filteralgo <- function(covdata, pa, weights=NULL, force=NULL, corcut=0.7)
   return(covdata.filter)}
   
 # Remove covariates with less than 10 unique points (required later for embedding)
-pointless<-which(apply(covdata, 2, function(x) length(unique(x)))<10)
+pointless10<-which(apply(covdata, 2, function(x) length(unique(x)))<10)
+if(length(pointless10)>0){
+pointless<-pointless10[!names(pointless10)%in% force]
 if(length(pointless)>0){
 print(paste0("Covariate '", names(covdata)[pointless], "' has less than 10 unique points and will be discarded"))
 covdata<-covdata[,-pointless]
+}
+pointless_f<-pointless10[names(pointless10)%in% force]
+if(length(pointless_f)>0){
+print(paste0("Warning: forced covariate '", names(covdata)[pointless_f], "' has less than 10 unique points"))
+}
 }
 
 # If covariate(s) to force, eliminate collinear ones
