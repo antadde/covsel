@@ -42,9 +42,12 @@ mdl.glm <- suppressWarnings(cv.glmnet(x, as.factor(pa), alpha=0.5, weights=weigh
 # Extract results
 glm.beta<-as.data.frame(as.matrix(coef(mdl.glm, s=mdl.glm$lambda.1se)))
 glm.beta<-data.frame(covariate = row.names(glm.beta), coef=as.numeric(abs(glm.beta[,1])))[which(glm.beta != 0),][-1,]
-if(nrow(glm.beta)<1){glm.beta<-as.data.frame(as.matrix(coef(mdl.glm, s=mdl.glm$lambda.min)))
-glm.beta<-data.frame(covariate = row.names(glm.beta), coef=as.numeric(abs(glm.beta[,1])))[which(glm.beta != 0),][-1,]}
-if(nrow(glm.beta)<1){print("No covariate selected after elastic-net regularization, skipping to next algorithm")
+if(nrow(glm.beta)<1){
+glm.beta<-as.data.frame(as.matrix(coef(mdl.glm, s=mdl.glm$lambda.min)))
+glm.beta<-data.frame(covariate = row.names(glm.beta), coef=as.numeric(abs(glm.beta[,1])))[which(glm.beta != 0),][-1,]
+}
+if(nrow(glm.beta)<1){
+print("No covariate selected after elastic-net regularization, skipping to next algorithm")
 } else {
 glm.beta<-data.frame(glm.beta[order(glm.beta$coef, decreasing = TRUE),], model="glm")
 glm.beta$covariate<-stri_sub(glm.beta$covariate,6,-6)
@@ -59,17 +62,25 @@ if('gam' %in% algorithms){
 # GAM (null-space penalization)
 ###
 # put aside forced covariates with < 10 unique points (required for default mgcv settings)
-pointless10<-integer(1); names(pointless10)<-"pointless10"
 if(length(force)>0){
+pointless10<-integer(1); names(pointless10)<-"pointless10"
 df_force<-data.frame(covdata[,force]); names(df_force)<-force
 pointless10<-which(apply(df_force, 2, function(x) length(unique(x)))<10)
 }
 # embedded covariate selection
+if(length(pointless10)>0){
 form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata)[names(covdata) != names(pointless10)],",bs='cr')"),collapse=" + ")))
+} else {
+form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata),",bs='cr')"),collapse=" + ")))
+}
 mdl.gam <- mgcv::bam(form, data=cbind(covdata, as.factor(pa)), weights=weights, family="binomial", method="fREML", select=TRUE, discrete=TRUE, control=list(nthreads=nthreads))
 t<-try(summary(mdl.gam), TRUE)
 if(class(t)=="try-error"){
+if(length(force)>0 & length(pointless10)>0){
 form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata)[names(covdata) != names(pointless10)],",bs='ts')"),collapse=" + ")))
+} else {
+form<-as.formula(paste0("pa ~ " ,paste(paste0("s(",names(covdata),",bs='ts')"),collapse=" + ")))
+}
 mdl.gam <- mgcv::bam(form, data=cbind(covdata, as.factor(pa)), weights=weights, family="binomial", method="fREML", select=TRUE, discrete=TRUE, control=list(nthreads=nthreads))
 }
 # Extract results
