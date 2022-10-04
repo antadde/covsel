@@ -111,7 +111,7 @@ mdl.rf <- RRF(covdata, as.factor(pa), classwt=c("0"=min(weights), "1"=max(weight
 # Extract results
 rf.beta<-data.frame(covariate = row.names(mdl.rf$importance), mdl.rf$importance,  row.names=NULL)
 rf.beta<-rf.beta[which(rf.beta$MeanDecreaseGini > 0),]
-if(nrow(gam.beta)<1){print("No covariate selected after RF (guided regularized random forest)")
+if(nrow(rf.beta)<1){print("No covariate selected after RF (guided regularized random forest)")
 } else {
 rf.beta<-data.frame(rf.beta[order(rf.beta$MeanDecreaseGini, decreasing = TRUE),], rank = 1:nrow(rf.beta), model="rf")
 ranks_1<-rbind(ranks_1, rf.beta[,c("covariate","rank","model")])
