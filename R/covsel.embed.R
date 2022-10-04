@@ -2,7 +2,7 @@
 #'
 #' Covariate selection with model-specific embedding (Step-2)
 #'
-#' @param covdata data.frame containing covariate data extracted at 'pa' locations
+#' @param covdata data.frame containing covariate data (continuous values) extracted at 'pa' locations
 #' @param pa numeric vector of species presences (1) and absences (0)
 #' @param weights numeric vector containing the weights for each value in 'pa' (of length 'pa')
 #' @param force optional character vector indicating the name(s) of the covariate(s) to be forced in the final set
