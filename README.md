@@ -1,6 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+ <!-- badges: start -->
+  [![Codecov test coverage](https://codecov.io/gh/N-SDM/covsel/branch/main/graph/badge.svg)](https://app.codecov.io/gh/N-SDM/covsel?branch=main)
+  <!-- badges: end -->
+  
+    <!-- badges: start -->
+  [![R-CMD-check](https://github.com/N-SDM/covsel/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/N-SDM/covsel/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
+
 # covsel
 
 The *covsel* R package is a ready-to-use, automated, covariate selection
