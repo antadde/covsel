@@ -14,6 +14,7 @@
 #' @return A list with three objects: (i) a data.frame with the covariates selected after the regularization/penalization and ranking procedures (covdata), (ii) a data.frame with the individual ranks of all covariates for each target algorithm (ranks_1), (iii) a data.frame with the final average ranks of selected covariates (ranks_2)
 #' @author Antoine Adde (antoine.adde@unil.ch)
 #' @examples
+#' library(covsel)
 #' covdata<-data_covfilter
 #' dim(covdata)
 #' covdata_embed<-covsel.embed(covdata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'))

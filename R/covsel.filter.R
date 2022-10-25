@@ -13,6 +13,7 @@
 #' @return A data.frame of "non-colinear" candidate covariates
 #' @author Antoine Adde (antoine.adde@unil.ch)
 #' @examples
+#' library(covsel)
 #' covdata<-data_covsel$env_vars
 #' dim(covdata)
 #' covdata_filter<-covsel.filter(covdata,
