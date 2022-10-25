@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Antoine Adde
 Maintainer: Antoine Adde <antoine.adde@unil.ch>
 Description: Embedded covariate selection procedure for ensemble species distribution modelling
-License: What license is it under?
+License: MIT + file LICENSE
 Depends: data.table, stringi, RRF, glmnet, mgcv, parallel
 Encoding: UTF-8
 LazyData: true

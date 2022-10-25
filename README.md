@@ -188,19 +188,19 @@ marmota*) in Switzerland.
 dim(covdata_embed$covdata) # data.frame with the top 12 retained for the final modelling set
 #> [1] 13609    12
 print(covdata_embed$ranks_2) # ranking table
-#>                                             covariate rank.f
-#> 1                     ch_bioclim_chclim25_pixel_bio11      1
-#> 9              ch_transport_tlm3d_pixel_dist2road_all      2
-#> 6    ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
-#> 3                      ch_bioclim_chclim25_pixel_bio4      4
-#> 7  ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      5
-#> 8                 ch_topo_alti3d2016_pixel_slope_mean      6
-#> 4                     ch_edaphic_eivdescombes_pixel_w      7
-#> 2                     ch_bioclim_chclim25_pixel_bio15      8
-#> 5         ch_hydro_gwn07_pixel_dist2riverstrahler_cl2      9
-#> 71   ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
-#> 14 ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     11
-#> 41                    ch_edaphic_eivdescombes_pixel_f     12
+#>                                              covariate rank.f
+#> 1                      ch_bioclim_chclim25_pixel_bio11      1
+#> 9               ch_transport_tlm3d_pixel_dist2road_all      2
+#> 6     ch_lulc_geostat2_present_pixel_2013_2018_cl1_100      3
+#> 4                       ch_bioclim_chclim25_pixel_bio4      4
+#> 7   ch_lulc_geostat65_present_pixel_2013_2018_cl46_100      5
+#> 8                  ch_topo_alti3d2016_pixel_slope_mean      6
+#> 5                      ch_edaphic_eivdescombes_pixel_w      7
+#> 2                      ch_bioclim_chclim25_pixel_bio13      8
+#> 3                       ch_bioclim_chclim25_pixel_bio3      9
+#> 71    ch_lulc_geostat2_present_pixel_2013_2018_cl2_100     10
+#> 14  ch_lulc_geostat65_present_pixel_2013_2018_cl37_100     11
+#> 110                    ch_bioclim_chclim25_pixel_bio15     12
 ```
 
 # Contributing
