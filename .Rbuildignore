@@ -4,3 +4,6 @@
 ^codecov\.yml$
 ^\.github$
 ^appveyor\.yml$
+^.travis\.yml$
+
+
