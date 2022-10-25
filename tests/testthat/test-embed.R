@@ -3,7 +3,7 @@ library(covsel)
 
 # Run example from covsel #
 covdata<-data_covfilter
-covdata_embed<-covsel.embed(covdata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'))
+covdata_embed<-covsel.embed(covdata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'), force="ch_bioclim_chclim25_pixel_bio11")
 
 # Test section #
 test_that("object class is correct", {
@@ -16,4 +16,8 @@ test_that("object class is correct", {
 
 test_that("covariate set was reduced", {
   expect_true(ncol(covdata_embed$covdata) < ncol(covdata))
+})
+
+test_that("ch_bioclim_chclim25_pixel_bio11 is forced in the final set", {
+  expect_true("ch_bioclim_chclim25_pixel_bio11" %in% colnames(covdata_embed$covdata))
 })

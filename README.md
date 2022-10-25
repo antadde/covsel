@@ -6,9 +6,6 @@
   
   [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/N-SDM/covsel?branch=main&svg=true)](https://ci.appveyor.com/project/N-SDM/covsel)
   <!-- badges: end -->
-  
-  [![R-CMD-check](https://github.com/N-SDM/covsel/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/N-SDM/covsel/actions/workflows/R-CMD-check.yaml)
-  <!-- badges: end -->
 
 # covsel
 
