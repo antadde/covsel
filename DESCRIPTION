@@ -6,7 +6,7 @@ Author: Antoine Adde
 Maintainer: Antoine Adde <antoine.adde@unil.ch>
 Description: Embedded covariate selection procedure for species distribution modelling.
 License: MIT + file LICENSE
-Depends: data.table, stringi, RRF, glmnet, mgcv, parallel
+Imports: data.table, stringi, RRF, glmnet, mgcv, parallel
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.1
