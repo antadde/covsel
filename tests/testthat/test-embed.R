@@ -21,3 +21,7 @@ test_that("covariate set was reduced", {
 test_that("ch_bioclim_chclim25_pixel_bio11 is forced in the final set", {
   expect_true("ch_bioclim_chclim25_pixel_bio11" %in% colnames(covdata_embed$covdata))
 })
+
+# Run fail example #
+fakedata<-data.frame(a=sample.int(12, length(data_covsel$pa), replace = TRUE), b=sample.int(12, length(data_covsel$pa), replace = TRUE))
+covdata_embed<-covsel.embed(fakedata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'))
