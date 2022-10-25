@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![Coverage Status](https://coveralls.io/repos/github/N-SDM/covsel/badge.svg?branch=main)](https://coveralls.io/github/N-SDM/covsel?branch=main)
+
 # covsel
 
 The *covsel* R package is a ready-to-use, automated, covariate selection
