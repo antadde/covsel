@@ -1,2 +1,12 @@
- language: R
- cache: packages
+language: R
+
+os:
+  - linux
+
+sudo: false	
+cache: packages
+use_bioc: true
+bioc_required: true
+
+r:
+  - devel
