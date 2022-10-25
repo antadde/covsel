@@ -2,9 +2,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
   [![Codecov test coverage](https://codecov.io/gh/N-SDM/covsel/branch/main/graph/badge.svg)](https://app.codecov.io/gh/N-SDM/covsel?branch=main)
-  
-  https://img.shields.io/github/downloads/N-SDM/covsel/total
-  
   <!-- badges: end -->
   
 # covsel

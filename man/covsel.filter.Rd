@@ -36,6 +36,7 @@ A data.frame of "non-colinear" candidate covariates
 Apply the collinearity filtering algorithm at each target level (i=variable level; ii=category level; iii= all remainders)
 }
 \examples{
+library(covsel)
 covdata<-data_covsel$env_vars
 dim(covdata)
 covdata_filter<-covsel.filter(covdata,

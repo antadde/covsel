@@ -39,6 +39,7 @@ A list with three objects: (i) a data.frame with the covariates selected after t
 Covariate selection with model-specific embedding (Step-2)
 }
 \examples{
+library(covsel)
 covdata<-data_covfilter
 dim(covdata)
 covdata_embed<-covsel.embed(covdata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'))
