@@ -4,7 +4,7 @@ Title: Two-step embedded covariate selection procedure
 Version: 1.0.0
 Author: Antoine Adde
 Maintainer: Antoine Adde <antoine.adde@unil.ch>
-Description: Embedded covariate selection procedure for ensemble species distribution modelling
+Description: Embedded covariate selection procedure for species distribution modelling
 License: MIT + file LICENSE
 Depends: data.table, stringi, RRF, glmnet, mgcv, parallel
 Encoding: UTF-8
