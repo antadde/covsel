@@ -7,7 +7,7 @@
 covsel.filteralgo(covdata, pa, weights = NULL, force = NULL, corcut = 0.7)
 }
 \arguments{
-\item{covdata}{data.frame containing covariate data extracted at 'pa' locations}
+\item{covdata}{data.frame containing covariate data (continuous values) extracted at 'pa' locations}
 
 \item{pa}{numeric vector of species presences (1) and absences (0)}
 
