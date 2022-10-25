@@ -1,7 +1,7 @@
 Package: covsel
 Type: Package
 Title: Two-step embedded covariate selection procedure
-Version: 0.1.0
+Version: 1.0.0
 Author: Antoine Adde
 Maintainer: Antoine Adde <antoine.adde@unil.ch>
 Description: Embedded covariate selection procedure for ensemble species distribution modelling
