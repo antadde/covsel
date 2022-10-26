@@ -3,6 +3,7 @@
 
 [![Codecov test coverage](https://codecov.io/gh/N-SDM/covsel/branch/main/graph/badge.svg)](https://app.codecov.io/gh/N-SDM/covsel?branch=main)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/N-SDM/covsel?branch=main&svg=true)](https://ci.appveyor.com/project/N-SDM/covsel)
+[![DOI](https://zenodo.org/badge/534570422.svg)](https://zenodo.org/badge/latestdoi/534570422)
 <!-- badges: end -->
   
 # covsel
