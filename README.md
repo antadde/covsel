@@ -4,6 +4,9 @@
   [![Codecov test coverage](https://codecov.io/gh/N-SDM/covsel/branch/main/graph/badge.svg)](https://app.codecov.io/gh/N-SDM/covsel?branch=main)
   <!-- badges: end -->
   
+    [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/N-SDM/covsel?branch=main&svg=true)](https://ci.appveyor.com/project/N-SDM/covsel)
+  <!-- badges: end -->
+  
 # covsel
 
 The *covsel* R package is a ready-to-use, automated, covariate selection
