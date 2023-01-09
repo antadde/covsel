@@ -20,6 +20,9 @@
 
 covsel.filteralgo <- function(covdata, pa, weights=NULL, force=NULL, corcut=0.7){
 
+# Retrieve covariate names
+candidates<-names(covdata)
+
 # If only one covariate in the candidate set, don't do anything
   if(ncol(covdata)==1){
   covdata.filter<-covdata
@@ -38,6 +41,12 @@ if(length(pointless_f)>0){
 print(paste0("Warning: forced covariate '", names(covdata)[pointless_f], "' has less than 10 unique points"))
 }
 }
+
+# If only one remaining covariate in the candidate set, stop
+  if(class(covdata) != "data.frame"){
+  covdata.filter<-data.frame(covdata)
+  names(covdata.filter)<-candidates[-pointless10]
+  return(covdata.filter)}
 
 # If covariate(s) to force, eliminate collinear ones
 force_dat<-data.frame()
