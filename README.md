@@ -15,7 +15,7 @@ combines (Step A) a collinearity-filtering algorithm and (Step B) three
 model-specific embedded regularization techniques, including generalized
 linear model with elastic net regularization, generalized additive model
 with null-space penalization, and guided regularized random forest. More
-details will come in the companion paper by Adde et al. (2023)
+details can be found in the companion paper by Adde et al. (2023)
 (<https://doi.org/10.1016/j.ecoinf.2023.102080>).
 
 ### Installation
