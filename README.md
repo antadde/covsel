@@ -15,8 +15,8 @@ combines (Step A) a collinearity-filtering algorithm and (Step B) three
 model-specific embedded regularization techniques, including generalized
 linear model with elastic net regularization, generalized additive model
 with null-space penalization, and guided regularized random forest. More
-details will come in the companion paper by \[hidden for peer-review\]
-(in prep).
+details can be found in the companion paper by Adde et al. (2023)
+(<https://doi.org/10.1016/j.ecoinf.2023.102080>).
 
 ### Installation
 
@@ -216,23 +216,21 @@ issue with the tag “enhancement”. Thanks!
 
 # Citation
 
-To cite *covsel* or acknowledge its use, cite the package as follows,
-substituting the version of *covsel* that you used for “version 1.0”:
+To cite *covsel* or acknowledge its use, cite the package as follows:
 
-\[info hidden for peer review\] et al. 2022. Too many candidates:
+Adde et al. 2023. Too many candidates:
 embedded covariate selection procedure for species distribution
-modelling with the covsel R package. – XXX XXX: XXX (ver. 1.0).
+modelling with the covsel R package. Ecological Informatics. <https://doi.org/10.1016/j.ecoinf.2023.102080>.
 
 # Contact
 
-\[info hidden for peer review\]
+antoine.adde@unil.ch
 
 Project Link: <https://github.com/N-SDM/covsel>
 
 # Acknowledgments
 
-*covsel* development has been conducted within the \[info hidden for
-peer review\] lab
+*covsel* development has been conducted within the ECOSPAT lab (<https://www.unil.ch/ecospat/en/home.html>)
 
 We gratefully acknowledge financial support through the Action Plan of
 the Swiss Biodiversity Strategy by the Federal Office for the
