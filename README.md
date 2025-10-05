@@ -184,7 +184,8 @@ covdata_embed<-covsel.embed(covdata=covdata,
                             algorithms=c('glm','gam','rf'), # default value
                             ncov=ceiling(log2(length(which(pa==1)))), # default value
                             maxncov=12, # default value
-                            nthreads=detectCores()/2)  # default value
+                            nthreads=detectCores()/22,  # default value
+                            seed=12345)  # default value
 ```
 
 Here we are! Below is the list of the top 12 covariates retained for
