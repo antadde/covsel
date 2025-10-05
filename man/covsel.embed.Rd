@@ -12,7 +12,8 @@ covsel.embed(
   algorithms = c("glm", "gam", "rf"),
   ncov = ceiling(log2(length(which(pa == 1)))),
   maxncov = 12,
-  nthreads = detectCores()/2
+  nthreads = detectCores()/2,
+  seed = 12345
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ covsel.embed(
 \item{maxncov}{maximum possible number of covariates in the final set}
 
 \item{nthreads}{number of cores to be used during parallel operations}
+
+\item{seed}{number of cores to be used during parallel operations}
 }
 \value{
 A list with three objects: (i) a data.frame with the covariates selected after the regularization/penalization and ranking procedures (covdata), (ii) a data.frame with the individual ranks of all covariates for each target algorithm (ranks_1), (iii) a data.frame with the final average ranks of selected covariates (ranks_2)
