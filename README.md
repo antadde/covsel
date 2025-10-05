@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/N-SDM/covsel?branch=main&svg=true)](https://ci.appveyor.com/project/N-SDM/covsel)
 [![codecov](https://codecov.io/gh/antadde/covsel/graph/badge.svg?token=GPMD9MS454)](https://codecov.io/gh/antadde/covsel)
-[![DOI](https://zenodo.org/badge/534570422.svg)](https://doi.org/10.1016/j.ecoinf.2023.102080)
+[![DOI](https://img.shields.io/badge/DOI-10.1016/j.ecoinf.2023.102080-blue.svg)](https://doi.org/10.1016/j.ecoinf.2023.102080)
 <!-- badges: end -->
   
 # covsel
