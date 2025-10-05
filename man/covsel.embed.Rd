@@ -17,26 +17,31 @@ covsel.embed(
 )
 }
 \arguments{
-\item{covdata}{data.frame containing covariate data (continuous values) extracted at 'pa' locations}
+\item{covdata}{A data.frame containing continuous covariate values extracted at presence–absence ('pa') locations.}
 
-\item{pa}{numeric vector of species presences (1) and absences (0)}
+\item{pa}{A numeric vector indicating species presences (1) and absences (0).}
 
-\item{weights}{numeric vector containing the weights for each value in 'pa' (of length 'pa')}
+\item{weights}{A numeric vector of weights corresponding to each value in 'pa' (same length as 'pa').}
 
-\item{force}{optional character vector indicating the name(s) of the covariate(s) to be forced in the final set}
+\item{force}{An optional character vector specifying the name(s) of covariate(s) to be forced into the final set.}
 
-\item{algorithms}{character vector indicating the name(s) of the algorithms(s) to be used for the embedding procedure (options: 'glm', 'gam', 'rf')}
+\item{algorithms}{A character vector specifying the algorithm(s) to be used for the embedding procedure (options: "glm", "gam", "rf").}
 
-\item{ncov}{target number of covariates to include in the final set}
+\item{ncov}{An integer specifying the target number of covariates to include in the final set.}
 
-\item{maxncov}{maximum possible number of covariates in the final set}
+\item{maxncov}{An integer specifying the maximum number of covariates allowed in the final set.}
 
-\item{nthreads}{number of cores to be used during parallel operations}
+\item{nthreads}{An integer specifying the number of cores to be used during parallel operations.}
 
-\item{seed}{number of cores to be used during parallel operations}
+\item{seed}{An integer specifying the random seed for reproducibility.}
 }
 \value{
-A list with three objects: (i) a data.frame with the covariates selected after the regularization/penalization and ranking procedures (covdata), (ii) a data.frame with the individual ranks of all covariates for each target algorithm (ranks_1), (iii) a data.frame with the final average ranks of selected covariates (ranks_2)
+A list with three components:
+\enumerate{
+  \item \code{covdata}: A data.frame containing the covariates selected after the regularization, penalization, and ranking procedures.
+  \item \code{ranks_1}: A data.frame containing the individual ranks of all covariates for each target algorithm.
+  \item \code{ranks_2}: A data.frame containing the final average ranks of the selected covariates.
+}
 }
 \description{
 Covariate selection with model-specific embedding (Step-2)
@@ -45,9 +50,9 @@ Covariate selection with model-specific embedding (Step-2)
 library(covsel)
 covdata<-data_covfilter
 dim(covdata)
-covdata_embed<-covsel.embed(covdata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'))
+covdata_embed<-covsel.embed(covdata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'), seed=12345)
 dim(covdata_embed$covdata)
 }
 \author{
-Antoine Adde (antoine.adde@unil.ch)
+Antoine Adde (antoine.adde@eawag.ch)
 }

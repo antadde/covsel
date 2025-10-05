@@ -7,18 +7,18 @@
 covsel.filteralgo(covdata, pa, weights = NULL, force = NULL, corcut = 0.7)
 }
 \arguments{
-\item{covdata}{data.frame containing covariate data (continuous values) extracted at 'pa' locations}
+\item{covdata}{A data.frame containing continuous covariate values extracted at presence–absence ('pa') locations.}
 
-\item{pa}{numeric vector of species presences (1) and absences (0)}
+\item{pa}{A numeric vector indicating species presences (1) and absences (0).}
 
-\item{weights}{numeric vector containing the weights for each value in 'pa' (of length 'pa')}
+\item{weights}{A numeric vector of weights corresponding to each value in 'pa' (same length as 'pa').}
 
-\item{force}{optional character vector indicating the name(s) of the covariate(s) to be forced in the final set}
+\item{force}{An optional character vector specifying the name(s) of covariate(s) to be forced into the final set.}
 
-\item{corcut}{numeric value for the correlation coefficient threshold used for identifying collinearity}
+\item{corcut}{A numeric value specifying the correlation coefficient threshold used to identify collinearity.}
 }
 \value{
-A data.frame of "non-collinear" candidate covariates
+A data.frame containing the set of non-collinear candidate covariates.
 }
 \description{
 Collinearity filtering algorithm
@@ -31,5 +31,5 @@ covdata_filter<-covsel.filteralgo(covdata, pa=data_covsel$pa)
 dim(covdata_filter)
 }
 \author{
-Antoine Adde (antoine.adde@unil.ch)
+Antoine Adde (antoine.adde@eawag.ch)
 }
