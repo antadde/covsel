@@ -21,8 +21,7 @@ details can be found in the companion paper by Adde et al. (2023)
 ### Installation
 
 The *covsel* package requires a standard installation of R
-(version≥4.0.0). You can install the development version of *covsel*
-from GitHub:
+(version≥4.0.0). You can install *covsel* from GitHub:
 
 ``` r
 # --- Stable release ---
