@@ -2,16 +2,16 @@
 #'
 #' Apply the collinearity filtering algorithm at each target level (i=variable level; ii=category level; iii= all remainders)
 #'
-#' @param covdata data.frame containing covariate data (continuous values) extracted at 'pa' locations
-#' @param pa numeric vector of species presences (1) and absences (0)
-#' @param weights numeric vector containing the weights for each value in 'pa' (of length 'pa')
-#' @param force optional character vector indicating the name(s) of the covariate(s) to be forced in the final set
-#' @param corcut numeric value for the correlation coefficient threshold used for identifying collinearity
-#' @param variables character vector of length ncol(covdata) containing variable-level info
-#' @param categories character vector of length ncol(covdata) containing category-level info
+#' @param covdata A data.frame containing continuous covariate values extracted at presence–absence ('pa') locations.
+#' @param pa A numeric vector indicating species presences (1) and absences (0).
+#' @param weights A numeric vector of weights corresponding to each value in 'pa' (same length as 'pa').
+#' @param force An optional character vector specifying the name(s) of covariate(s) to be forced into the final set.
+#' @param corcut A numeric value specifying the correlation coefficient threshold used to identify collinearity.
+#' @param variables A character vector of length equal to ncol(covdata) containing variable-level information.
+#' @param categories A character vector of length equal to ncol(covdata) containing category-level information.
 #'
-#' @return A data.frame of "non-colinear" candidate covariates
-#' @author Antoine Adde (antoine.adde@unil.ch)
+#' @return A data.frame containing the set of non-collinear candidate covariates.
+#' @author Antoine Adde (antoine.adde@eawag.ch)
 #' @examples
 #' library(covsel)
 #' covdata<-data_covsel$env_vars

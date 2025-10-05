@@ -2,23 +2,28 @@
 #'
 #' Covariate selection with model-specific embedding (Step-2)
 #'
-#' @param covdata data.frame containing covariate data (continuous values) extracted at 'pa' locations
-#' @param pa numeric vector of species presences (1) and absences (0)
-#' @param weights numeric vector containing the weights for each value in 'pa' (of length 'pa')
-#' @param force optional character vector indicating the name(s) of the covariate(s) to be forced in the final set
-#' @param algorithms character vector indicating the name(s) of the algorithms(s) to be used for the embedding procedure (options: 'glm', 'gam', 'rf')
-#' @param ncov target number of covariates to include in the final set
-#' @param maxncov maximum possible number of covariates in the final set
-#' @param nthreads number of cores to be used during parallel operations
-#' @param seed number of cores to be used during parallel operations
+#' @param covdata A data.frame containing continuous covariate values extracted at presence–absence ('pa') locations.
+#' @param pa A numeric vector indicating species presences (1) and absences (0).
+#' @param weights A numeric vector of weights corresponding to each value in 'pa' (same length as 'pa').
+#' @param force An optional character vector specifying the name(s) of covariate(s) to be forced into the final set.
+#' @param algorithms A character vector specifying the algorithm(s) to be used for the embedding procedure (options: "glm", "gam", "rf").
+#' @param ncov An integer specifying the target number of covariates to include in the final set.
+#' @param maxncov An integer specifying the maximum number of covariates allowed in the final set.
+#' @param nthreads An integer specifying the number of cores to be used during parallel operations.
+#' @param seed An integer specifying the random seed for reproducibility.
 #'
-#' @return A list with three objects: (i) a data.frame with the covariates selected after the regularization/penalization and ranking procedures (covdata), (ii) a data.frame with the individual ranks of all covariates for each target algorithm (ranks_1), (iii) a data.frame with the final average ranks of selected covariates (ranks_2)
-#' @author Antoine Adde (antoine.adde@unil.ch)
+#' @return A list with three components:
+#' \enumerate{
+#'   \item \code{covdata}: A data.frame containing the covariates selected after the regularization, penalization, and ranking procedures.
+#'   \item \code{ranks_1}: A data.frame containing the individual ranks of all covariates for each target algorithm.
+#'   \item \code{ranks_2}: A data.frame containing the final average ranks of the selected covariates.
+#' }
+#' @author Antoine Adde (antoine.adde@eawag.ch)
 #' @examples
 #' library(covsel)
 #' covdata<-data_covfilter
 #' dim(covdata)
-#' covdata_embed<-covsel.embed(covdata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'))
+#' covdata_embed<-covsel.embed(covdata, pa=data_covsel$pa, algorithms=c('glm','gam','rf'), seed=12345)
 #' dim(covdata_embed$covdata)
 #' @export
 
