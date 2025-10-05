@@ -25,10 +25,14 @@ The *covsel* package requires a standard installation of R
 from GitHub:
 
 ``` r
-if(!"covsel" %in% installed.packages()) devtools::install_github("N-SDM/covsel")
+# --- Stable release ---
+remotes::install_github("antadde/covsel", ref = "v1.0.0", upgrade=FALSE)
+
+# --- Development version ---
+remotes::install_github("antadde/covsel", upgrade=FALSE)
 ```
 
-## Package functionalities
+### Package functionalities
 
 The current version of the *covsel* package (ver. 1.0) includes a set of
 three functions. See function help files for additional details on input
