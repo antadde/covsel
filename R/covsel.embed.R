@@ -10,6 +10,7 @@
 #' @param ncov target number of covariates to include in the final set
 #' @param maxncov maximum possible number of covariates in the final set
 #' @param nthreads number of cores to be used during parallel operations
+#' @param seed number of cores to be used during parallel operations
 #'
 #' @return A list with three objects: (i) a data.frame with the covariates selected after the regularization/penalization and ranking procedures (covdata), (ii) a data.frame with the individual ranks of all covariates for each target algorithm (ranks_1), (iii) a data.frame with the final average ranks of selected covariates (ranks_2)
 #' @author Antoine Adde (antoine.adde@unil.ch)
@@ -21,8 +22,12 @@
 #' dim(covdata_embed$covdata)
 #' @export
 
-covsel.embed <- function(covdata, pa, weights=NULL, force=NULL, algorithms=c('glm','gam','rf'), ncov=ceiling(log2(length(which(pa==1)))), maxncov=12, nthreads=detectCores()/2){
+covsel.embed <- function(covdata, pa, weights=NULL, force=NULL, algorithms=c('glm','gam','rf'), ncov=ceiling(log2(length(which(pa==1)))), maxncov=12, nthreads=detectCores()/2, seed=12345){
 
+# global reproducibility seed
+RNGkind("L'Ecuyer-CMRG")
+set.seed(seed)
+  
 # pre-settings
 ranks_1<-data.frame()
 if(!is.numeric(weights)) weights<-rep(1, length(pa))
